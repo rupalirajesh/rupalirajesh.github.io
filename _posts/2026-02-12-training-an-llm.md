@@ -5,7 +5,7 @@ date: 2026-02-12
 author: Rupali Rajesh
 ---
 
-Overall Training Pipeline
+# Overall Training Pipeline
 
 Training an LLM involves the following steps -
 
@@ -24,7 +24,7 @@ preferences using either ***RLHF*** or ***DPO***.
 
 ![](/assets/images/IMG_0793.jpg)
 
-Pretraining
+# Pretraining
 
 Pretraining is the stage where we build the foundation model by feeding
 large and diverse text from sources such as Wikipedia, books, code
@@ -50,7 +50,7 @@ instruction and completion. The underlying next-token prediction
 mechanism is the same in both cases and is explained in more detail in
 the SFT section.
 
-Why alignment?
+# Why alignment?
 
 LLMs are pre-trained on a large amount of data, for example the entirety
 of Wikipedia or the whole internet. The base LLM is simply trained on
@@ -77,7 +77,7 @@ information, in sections, or in an essay-style.
 SFT teaches the model how to respond. Preference Optimization teaches
 the model which responses are better.
 
-Supervised Fine Tuning (SFT)
+# Supervised Fine Tuning (SFT)
 
 ***Instruction tuning*** is where we adapt the base model to our desired
 style of input. To do this, we might feed the model chat templates in
@@ -170,7 +170,7 @@ This tells the model what good explanations look like, anchors its
 behaviour, and sets the baseline for preference optimization to build
 on.
 
-Preference Optimization
+# Preference Optimization
 
 Preference optimization is a post-training method where a model is
 trained to prefer better responses over worse ones. This step aligns our
