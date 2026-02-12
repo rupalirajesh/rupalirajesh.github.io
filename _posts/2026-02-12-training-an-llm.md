@@ -21,8 +21,7 @@ prompts + responses.
 Preference Fine-Tuning (PreFT): The model is aligned to human
 preferences using either ***RLHF*** or ***DPO***.
 
-![image3.jpg](media/image1.jpeg){width="6.5in"
-height="1.9583333333333333in"}
+![](/assets/images/IMG_0793.jpg)
 
 Pretraining
 
@@ -259,8 +258,7 @@ This objective function is optimized using an ***RL algorithm*** like
 ***PPO*** or ***GRPO***. I explain how PPO works below as an excuse to
 learn about it. Feel free to skip!
 
-![image1.jpg](media/image2.jpeg){width="6.5in"
-height="3.763888888888889in"}
+![](/assets/images/IMG_0792.jpg)
 
 ### Proximal Policy Optimization (PPO)
 
@@ -289,8 +287,7 @@ Reward: $r$ given at the end of the sequence.
 
 As an example -
 
-![image2.jpg](media/image3.jpeg){width="6.3189446631671045in"
-height="3.9560914260717412in"}
+![](/assets/images/IMG_0794.jpg)
 
 To maximise this expectation, we use policy gradient updates to the
 parameters. Here is the vanilla policy gradient.
