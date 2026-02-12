@@ -1,0 +1,6 @@
+title: Rupali Rajesh
+description: LLMs | AI
+theme: minima
+markdown: kramdown
+kramdown:
+  math_engine: mathjax
