@@ -1,3 +1,9 @@
+---
+layout: post
+title: "Training a Language Model"
+date: 2026-02-12
+---
+
 Overall Training Pipeline
 
 Training an LLM involves the following steps -
