@@ -16,7 +16,7 @@ Training an LLM involves the following steps -
       - Supervised Fine-Tuning (***SFT***): The model is trained on a labeled dataset of human-written or synthetically generated examples of ideal prompts + responses.
       - Preference Fine-Tuning (PreFT): The model is aligned to human preferences using either ***RLHF*** or ***DPO***.
 
-![](/assets/images/IMG_0793.jpg)
+![](/assets/images/IMG_0793.jpg){: .align-center style="width: 70%; max-width: 600px;"}
 
 # Pretraining
 
@@ -236,7 +236,7 @@ This objective function is optimized using an ***RL algorithm*** like
 ***PPO*** or ***GRPO***. I explain how PPO works below as an excuse to
 learn about it. Feel free to skip!
 
-![](/assets/images/IMG_0792.jpg)
+![](/assets/images/IMG_0792.jpg){: .align-center style="width: 70%; max-width: 600px;"}
 
 ### Proximal Policy Optimization (PPO)
 
@@ -261,7 +261,7 @@ Reward: $r$ given at the end of the sequence.
 
 As an example -
 
-![](/assets/images/IMG_0794.jpg)
+![](/assets/images/IMG_0794.jpg){: .align-center style="width: 70%; max-width: 600px;"}
 
 To maximise this expectation, we use policy gradient updates to the
 parameters. Here is the vanilla policy gradient.
