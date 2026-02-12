@@ -9,18 +9,11 @@ author: Rupali Rajesh
 
 Training an LLM involves the following steps -
 
-***Pre-training*** the model where we train it on a large amount of
-unlabeled data.
+  - ***Pre-training*** the model where we train it on a large amount of unlabeled data.
 
-***Post-training*** the model for alignment. To use and query the LLM,
-we need to align its behaviour to follow a particular style.
-
-Supervised Fine-Tuning (***SFT***): The model is trained on a labeled
-dataset of human-written or synthetically generated examples of ideal
-prompts + responses.
-
-Preference Fine-Tuning (PreFT): The model is aligned to human
-preferences using either ***RLHF*** or ***DPO***.
+  - ***Post-training*** the model for alignment. To use and query the LLM, we need to align its behaviour to follow a particular style.
+      - Supervised Fine-Tuning (***SFT***): The model is trained on a labeled dataset of human-written or synthetically generated examples of ideal prompts + responses.
+      - Preference Fine-Tuning (PreFT): The model is aligned to human preferences using either ***RLHF*** or ***DPO***.
 
 ![](/assets/images/IMG_0793.jpg)
 
@@ -58,21 +51,15 @@ raw text sequences without an explicit prompt-response structure. We
 need to align its behaviour to follow a particular style of answering
 questions.
 
-For example, if we prompt our model as follows ["]{dir="rtl"}Explain
+For example, if we prompt our model as follows: "Explain
 gradient descent.", it might imitate a book, forum debate, or the
 relevant research paper. We would like it to condense information and
 answer questions directly, in this case.
 
 Here are some examples of guidelines we would like our LLM to follow.
-
-Avoid offensive language.
-
-Do not answer questions that might encourage racism or violence (for
-example, we might want to avoid giving users information on how to build
-bombs or procure weapons).
-
-Answer questions cordially, briefly, without too much technical
-information, in sections, or in an essay-style.
+  - Avoid offensive language.
+  - Do not answer questions that might encourage racism or violence (for example, we might want to avoid giving users information on how to build bombs or procure weapons).
+  - Answer questions cordially, briefly, without too much technical information, in sections, or in an essay-style.
 
 SFT teaches the model how to respond. Preference Optimization teaches
 the model which responses are better.
@@ -85,12 +72,12 @@ question-answer format. A good example of this data might be stack
 exchange posts or reddit posts, which are naturally in this format.
 
 We generate *labeled data* where each example is of the
-form$\lbrack instruction(orprompt)completion(oridealresponse)\rbrack.$
+form$\lbrack instruction (or prompt), completion (or ideal response)\rbrack.$
 
 For explanation models, this might be
-$\lbrack instruction = input + predictioncompletion = trustedexplanation\rbrack$.
+$\lbrack instruction = input + prediction, completion = trusted explanation\rbrack$.
 
-This is our dataset of ["]{dir="rtl"}good responses" for the model to
+This is our dataset of "good responses" for the model to
 learn from.
 
 All frontier models use *synthetic data* along with human-written
@@ -104,7 +91,7 @@ The model is fine-tuned with ***cross-entropy loss***.
 (Skip this next part if you already know how next token prediction and
 this optimization works.)
 
-Let[']{dir="rtl"}s represent the dataset as follows:
+Let's represent the dataset as follows:
 $D = \{(x^{(i)},y^{(i)}{\}^{N}}_{i = 1}$.
 
 Here, $x^{(i)}$ is the instruction, $y^{(i)}$ is the completion, and $N$
@@ -156,19 +143,14 @@ Now the cross entropy loss becomes
 $H(p,q) = - \sum_{v}^{}{}q(v)logp(v|x,y_{< j}) = - logp(y_{j}|x,y_{< j})$
 
 Summing over all of the tokens,
-$H(p,q) = \sum_{j = 1}^{T_{i}}{} - logp({y_{j}}^{(i)}|x,{{y_{< j}}^{(i)}}_{})$.
+$H(p,q) = \sum_{j=1}^{T_i} - \log p\big(y_j^{(i)} \mid x, y_{<j}^{(i)}\big)$.
 Averaging this over all of the examples in the dataset, we get exactly
 our maximum likelihood objective.
 
 Some small things to note are that -
-
-The loss is only computed at the completion tokens.
-
-The prompt tokens are used as context but are not penalized.
-
-This tells the model what good explanations look like, anchors its
-behaviour, and sets the baseline for preference optimization to build
-on.
+  - The loss is only computed at the completion tokens.
+  - The prompt tokens are used as context but are not penalized.
+  - This tells the model what good explanations look like, anchors its behaviour, and sets the baseline for preference optimization to build on.
 
 # Preference Optimization
 
@@ -178,15 +160,9 @@ model to human preferences. We train it for chat *style*. It continues
 building capabilities learned from SFT, but with lower absolute
 magnitude of improvements. Why?
 
-SFT does most of the heavy-lifting. So the model already understands the
-task, knows the skill, and produces reasonable outputs.
-
-Preference signals are weaker than supervised labels. Getting something
-like ["]{dir="rtl"}Response A is better than Response B" produces much
-noisier gradients with smaller step sizes than ["]{dir="rtl"}Response C
-is the ideal response" which gives us target tokens.
-
-Most preference methods penalize deviating from the SFT model, as we
+  - SFT does most of the heavy-lifting. So the model already understands the task, knows the skill, and produces reasonable outputs.
+  - Preference signals are weaker than supervised labels. Getting something like "Response A is better than Response B" produces much noisier gradients with smaller step sizes than "Response C is the ideal response" which gives us target tokens.
+  - Most preference methods penalize deviating from the SFT model, as we
 will see.
 
 This is a good thing. We do not want to stray too far away from our
@@ -266,19 +242,15 @@ learn about it. Feel free to skip!
 PPO is an RL algorithm that improves a policy without letting it deviate
 too much from the original policy, using a *clipped objective.*
 
-In the policy gradient methods for RL, we want to update the parameters
-$\theta$ to increase the expected reward:
-${max_{\theta}E}_{\tau\sim\pi_{\theta}}\lbrack R(\tau)\rbrack$. For us,
-$\theta$ are the parameters of the model (or the weights of the
-transformer), $\pi_{\theta}$ is the outputs of the language model as a
-probability distribution, $\tau$ is one such fully-generated response of
-the LLM, and $R(\tau)$ is the total reward for the LLM response. The
-expectation averages rewards over many responses the model could
-generate.
+In policy gradient methods for RL, we update the parameters $\theta$ to increase the expected reward:
+
+![](/assets/images/eq1.png)
+
+Here, $\theta$ are the model parameters (the transformer weights), $\pi_{\theta}$ is the language model’s output distribution, $\tau$ is a fully generated response, and $R(\tau)$ is the total reward for that response. The expectation averages rewards over many responses the model could generate.
 
 Let us quickly frame the RL problem before seeing how to solve this -
 
-Stochastic policy: $\pi_{\theta}(a|s)$
+Stochastic policy: $\pi_{\theta}(a \mid s)$
 
 State: $s = (x,y_{< t})$
 
@@ -294,7 +266,8 @@ To maximise this expectation, we use policy gradient updates to the
 parameters. Here is the vanilla policy gradient.
 
 Objective:
-$\nabla_{\theta}J(\theta) = E_{\pi_{\theta}}{\lbrack\nabla}_{\theta}log\pi_{\theta}(a|s)A(s,a)\rbrack$
+
+![](/assets/images/eq3.png)
 
 Update: $\theta_{new} = \theta_{old} + \alpha\nabla_{\theta}(E)$
 
@@ -317,22 +290,16 @@ the average reward in that state. Advantage is often assigned to all
 tokens in the response. The reward is sequence-level.
 
 Modern RL uses two models -
-
-***Actor*** or the policy $\pi_{\theta}(a|s)$ which decides what action
+  1. ***Actor*** or the policy $\pi_{\theta}(a|s)$ which decides what action
 to take. In LLMs, this asks what token the model should output next.
-
-***Critic*** or the value function $V(s)$ which estimates how good the
-current situation is by evaluating the actor[']{dir="rtl"}s decisions.
+  2. ***Critic*** or the value function $V(s)$ which estimates how good the
+current situation is by evaluating the actor's decisions.
 Without this, the policy gradients would be the vanilla policy
 gradients. The critic allows us to compute advantage which answers if
 this action is better or worse than expected, stabilizing training.
+  The critic is trained by regression. $\overset{\hat{}}{V}(s_{t}) = r_{t} + \gamma V(s_{t + 1})$. The loss is typically simply MSE, $L_{value} = E\lbrack(V(s_{t}) - \overset{\hat{}}{V}(s_{t}))^{2}\rbrack$.
 
-> The critic is trained by regression.
-> $\overset{\hat{}}{V}(s_{t}) = r_{t} + \gamma V(s_{t + 1})$. The loss
-> is typically simply MSE,
-> $L_{value} = E\lbrack(V(s_{t}) - \overset{\hat{}}{V}(s_{t}))^{2}\rbrack$.
-
-Let[']{dir="rtl"}s rewrite the objective using old policy data:
+Let's rewrite the objective using old policy data:
 $J(\theta) = E_{\theta_{old}}\lbrack r_{\theta}(s,a)A(s,a)\rbrack.$
 
 So an earlier solution was Trust Region Policy Optimization (TRPO). TRPO
@@ -345,7 +312,9 @@ Using PPO, we clip the objective, which allows us to enforce almost the
 same constraint with a first-order stochastic gradient descent.
 $L_{policy}(\theta) = E\lbrack min(r(\theta)A,clip(r(\theta),1 - \epsilon,1 + \epsilon)A)\rbrack$
 where the clip function is defined as follows:
-$clip(x,a,b) = \left\{ aifx < a,xifa \leq x \leq b,bifx > b \right\}.$
+
+![](/assets/images/eq2.png)
+
 It constrains $r(\theta)$ to lie between $1 - \epsilon$ and
 $1 + \epsilon$. Intuitively, this means $1 + \epsilon$ is the maximum
 allowed increase in probability and similarly, $1 - \epsilon$ is the
@@ -359,7 +328,7 @@ actor using the clipped objective and advantage estimates, and trains
 the critic to better estimate $V(s)$ which improves future advantage
 estimates. The entropy bonus encourages exploration $H(\pi_{\theta})$.
 
-Now, let[']{dir="rtl"}s look at LLM-specific PPO in RLHF.
+Now, let's look at LLM-specific PPO in RLHF.
 
 There is no environment reward, only a learned reward model that scores
 completions generated by the model: $r_{RM}(x,y)$ (RM is the reward
@@ -381,28 +350,28 @@ SFT, and the clip prevents violent updates.
 
 #### What is wrong with PPO for LLM alignment? 
 
-Reward models are brittle. They are trained on comparisons, extrapolate
+  - Reward models are brittle. They are trained on comparisons, extrapolate
 poorly, and are easy to hack. Since PPO tries to find actions that
 maximize the reward (it is not trying to imitate data), it is prone to
 reward hacking. This is amplified by the critic and propagates the
-reward model[']{dir="rtl"}s mistake across states.
+reward model's mistake across states.
 
-The critic is expensive and unstable. Training PPO requires an actor,
+  - The critic is expensive and unstable. Training PPO requires an actor,
 critic, reward model, and reference model. Most of the PPO instability
 comes from the critic, not the policy. This is because critic overfits.
 
-Rollouts are full prompt to response trajectories. These are sampled
+  - Rollouts are full prompt to response trajectories. These are sampled
 from the current policy, then scored by the reward model, and used to
 compute advantages for updating the policy and critic. For this, we must
 repeatedly generate fresh on-policy data (from $\pi_{\theta}$ currently
 being updated), which is extremely expensive for LLMs.
 
-It is incompatible with our data. Human feedback is pairwise preferences
+  - It is incompatible with our data. Human feedback is pairwise preferences
 and offline, however PPO wants scalar rewards and online interactions.
 Training reward models and converting preferences to scalar rewards are
 hacks that add noise and increase the risk of failure.
 
-The KL penalty coefficient $\beta$ must be tuned, which is expensive.
+  - The KL penalty coefficient $\beta$ must be tuned, which is expensive.
 
 ## Direct Preference Optimization (DPO)
 
@@ -419,7 +388,7 @@ the ideal human-preferred policy (simply the theoretical model that
 gives $\pi^{*}(y^{+}|x) > \pi^{*}(y^{-}|x)$). It is a stochastic policy,
 so better answers are more likely and worse ones are less likely).
 
-Let[']{dir="rtl"}s derive this. This is known as an inverse RL
+Let's derive this. This is known as an inverse RL
 derivation since we infer the reward model from observed behaviour.
 
 We want to optimize
@@ -450,9 +419,11 @@ So we get the following solution:
 $\pi^{*}(y|x) = \frac{1}{Z(x)}\pi_{SFT}(y|x)exp(\frac{r(x,y)}{\beta})$.
 
 Taking logs:
-$log\pi^{*}(y|x) = log\pi_{SFT}(y|x) + \frac{1}{\beta}r(x,y) - logZ(x)$.
+$\log \pi^{*}(y \mid x) = \log \pi_{SFT}(y \mid x) + \frac{1}{\beta} r(x,y) - \log Z(x)$.
+
 Rearranging the terms, we get:
-$r(x,y) = \beta(log\pi^{*}(y|x) - log\pi_{SFT}(y|x)) + \beta logZ(x)$.
+
+$r(x,y) = \beta \big( \log \pi^{*}(y \mid x) - \log \pi_{SFT}(y \mid x) \big) + \beta \log Z(x)$.
 
 $$r(y^{+}|x) - r(y^{-}|x) = \beta\lbrack log\pi^{*}(y^{+}|x) - log\pi_{SFT}(y^{+}|x) + \beta logZ(x) - log\pi^{*}(y^{-}|x) + log\pi_{SFT}(y^{-}|x) - \beta logZ(x)\rbrack$$
 
@@ -478,16 +449,13 @@ $y^{+}$ and $y^{-}$ respectively, relative to the SFT model. So, DPO
 training is simply logistic regression on preferences.
 
 Some key properties are -
-
-Training is offline. The loss online depends on a static dataset of
+  - Training is offline. The loss online depends on a static dataset of
 preferences and $log\pi_{\theta}(y^{\pm},x)$. We do not need new
 rollouts (samples generated from $\pi_{\theta}$).
-
-The closeness to SFT enforcement is implicit. Our inverse RL derivation
+  - The closeness to SFT enforcement is implicit. Our inverse RL derivation
 assumes that $\pi^{*} \propto \pi_{SFT}exp(r/\beta)$. So when we
 optimize preferences, we enforce closeness to SFT.
-
-Gradients are bounded. Let[']{dir="rtl"}s call
+  - Gradients are bounded. Let's call
 $\Delta = \beta\lbrack log\pi_{\theta}(y^{+}|x) - log\pi_{\theta}(y^{-}|x)\rbrack$.
 Therefore,
 $\frac{\partial L_{DPO}}{\partial\Delta} = \sigma(\Delta) - 1\epsilon\lbrack - 1,0\rbrack$.
