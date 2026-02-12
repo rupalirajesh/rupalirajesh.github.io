@@ -261,7 +261,7 @@ Reward: $r$ given at the end of the sequence.
 
 As an example -
 
-![](/assets/images/IMG_0794.jpg){: .align-center style="width: 70%; max-width: 600px;"}
+![](/assets/images/IMG_0794-2.jpg){: .align-center style="width: 70%; max-width: 600px;"}
 
 To maximise this expectation, we use policy gradient updates to the
 parameters. Here is the vanilla policy gradient.
