@@ -1,20 +1,50 @@
-\title: Rupali Rajesh
+title: Rupali Rajesh
 description: LLMs | AI
+url: "https://rupalirajesh.github.io"
+baseurl: ""
 remote_theme: mmistakes/minimal-mistakes@4.19.3
+
+# Site Author
+author:
+  name: "Rupali Rajesh"
+  bio: "LLMs | AI"
+  location: "Chennai, Tamil Nadu, IN"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/rupalirajesh"
+
+# Build settings
 markdown: kramdown
 kramdown:
   math_engine: mathjax
   syntax_highlighter: rouge
-
-# Enable MathJax
-head_scripts:
-  - https://polyfill.io/v3/polyfill.min.js?features=es6
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 plugins:
   - jekyll-remote-theme
   - jekyll-include-cache
   - jekyll-paginate
   - jekyll-sitemap
-  - jekyll-gist
   - jekyll-feed
+
+# Pagination
+paginate: 5
+paginate_path: /page:num/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: false
+      share: true
+      related: true
+
+# MathJax
+head_scripts:
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
