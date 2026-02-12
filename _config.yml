@@ -1,6 +1,6 @@
 title: Rupali Rajesh
 description: LLMs | AI
-remote_theme: mmistakes/minimal-mistakes
+remote_theme: mmistakes/minimal-mistakes@4.24.0
 
 markdown: kramdown
 kramdown:
