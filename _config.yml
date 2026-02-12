@@ -1,6 +1,8 @@
 title: Rupali Rajesh
 description: LLMs | AI
-theme: minima
+remote_theme: mmistakes/minimal-mistakes
 markdown: kramdown
 kramdown:
   math_engine: mathjax
+plugins:
+  - jekyll-remote-theme
