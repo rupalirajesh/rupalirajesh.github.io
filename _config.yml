@@ -22,7 +22,7 @@ kramdown:
 
 plugins:
   - jekyll-remote-theme
-  - jekyll-include-cache
+  - jekyll-include-cache    # ← THIS IS CRITICAL
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-feed
