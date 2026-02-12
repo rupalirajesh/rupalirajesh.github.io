@@ -3,6 +3,7 @@ layout: single
 title: "Training a Language Model"
 date: 2026-02-12
 author: Rupali Rajesh
+mathjax: true
 ---
 
 # Overall Training Pipeline
