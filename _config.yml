@@ -1,4 +1,4 @@
-title: Rupali Rajesh
+\title: Rupali Rajesh
 description: LLMs | AI
 remote_theme: mmistakes/minimal-mistakes@4.19.3
 markdown: kramdown
@@ -6,10 +6,15 @@ kramdown:
   math_engine: mathjax
   syntax_highlighter: rouge
 
-# Enable MathJax globally
+# Enable MathJax
 head_scripts:
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 plugins:
   - jekyll-remote-theme
+  - jekyll-include-cache
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
