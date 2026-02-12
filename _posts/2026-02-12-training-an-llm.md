@@ -16,7 +16,7 @@ Training an LLM involves the following steps -
       - Supervised Fine-Tuning (***SFT***): The model is trained on a labeled dataset of human-written or synthetically generated examples of ideal prompts + responses.
       - Preference Fine-Tuning (PreFT): The model is aligned to human preferences using either ***RLHF*** or ***DPO***.
 
-![](/assets/images/IMG_0793.jpg)
+![](/assets/images/IMG_0793.jpg){: .align-center style="width: 70%; max-width: 600px;"}
 
 # Pretraining
 
@@ -337,7 +337,7 @@ model). The reward is zero except at the final token.
 
 At each step, here is the defined reward:
 $r = r_{RM} - KL(\pi_{\theta}||\pi_{SFT})$. More
-practically,$r_{t} = {r_{t}}^{RM} - \beta(log\pi_{\theta}(a_{t}|s_{t}) - log\pi_{SFT}(a_{t}|s_{t}))$.
+practically,![](/assets/images/eq4.png).
 The computer returns are
 $\overset{\hat{}}{R_{t}} = \sum_{i = t}^{T}{}\gamma^{i - t}r_{i}$.
 
@@ -384,9 +384,9 @@ $(x,y^{+},y^{-})$ where $y^{+}$ is the preferred response to input $x$
 and $y^{-}$ is the less preferred response to input $x$.
 
 Let us assume the reward model is of the form:
-$r(x,y) = \beta(log\pi^{*}(y|x) - log\pi_{SFT}(y|x))$ where $\pi^{*}$ is
+$$r(x,y) = \beta(\log\pi_{ideal}(y|x) - \log\pi_{SFT}(y|x))$$ where $\pi_{ideal}$ is
 the ideal human-preferred policy (simply the theoretical model that
-gives $\pi^{*}(y^{+}|x) > \pi^{*}(y^{-}|x)$). It is a stochastic policy,
+gives $$\pi_{ideal}(y^{\text{+}}|x) > \pi_{ideal}(y^{\text{-}}|x)$$). It is a stochastic policy,
 so better answers are more likely and worse ones are less likely).
 
 Let's derive this. This is known as an inverse RL
@@ -411,7 +411,8 @@ This gives:
 
 $$log\pi(y) = \frac{1}{\beta}(r(x,y) + \beta log\pi_{SFT}(y) - \lambda - \beta)$$
 
-$\pi(y) = exp(\frac{r(x,y)}{\beta})\pi_{SFT}(y)exp(\frac{- \lambda - \beta}{\beta})$.
+$$\pi(y) = exp(\frac{r(x,y)}{\beta})\pi_{SFT}(y)exp(\frac{- \lambda - \beta}{\beta})$$
+
 The last exponential term is a normalization constant $Z^{- 1}$, which
 ensures $\sum_{y}^{}{}\pi^{*}(y|x) = 1$ so it is a valid probability
 distribution.
@@ -420,22 +421,20 @@ So we get the following solution:
 $\pi^{*}(y|x) = \frac{1}{Z(x)}\pi_{SFT}(y|x)exp(\frac{r(x,y)}{\beta})$.
 
 Taking logs:
-$\log \pi^{*}(y \mid x) = \log \pi_{SFT}(y \mid x) + \frac{1}{\beta} r(x,y) - \log Z(x)$.
+$\log \pi_{ideal}(y \mid x) = \log \pi_{SFT}(y \mid x) + \frac{1}{\beta} r(x,y) - \log Z(x)$.
 
 Rearranging the terms, we get:
 
-$r(x,y) = \beta \big( \log \pi^{*}(y \mid x) - \log \pi_{SFT}(y \mid x) \big) + \beta \log Z(x)$.
+$$r(x,y) = \beta \big( \log \pi_{ideal}(y \mid x) - \log \pi_{SFT}(y \mid x) \big) + \beta \log Z(x)$$
 
-$$r(y^{+}|x) - r(y^{-}|x) = \beta\lbrack log\pi^{*}(y^{+}|x) - log\pi_{SFT}(y^{+}|x) + \beta logZ(x) - log\pi^{*}(y^{-}|x) + log\pi_{SFT}(y^{-}|x) - \beta logZ(x)\rbrack$$
-
-$$r(y^{+}|x) - r(y^{-}|x) = \beta\lbrack log\pi^{*}(y^{+}|x) - log\pi^{*}(y^{-}|x) - (log\pi_{SFT}(y^{+}|x) - log\pi_{SFT}(y^{-}|x))\rbrack$$
+![](/assets/images/eq5.png)
 
 Modeling preference probability using Bradley-Terry derived earlier, we
 have:
 
 $$P(y^{+} \succ y^{-}|x) = \sigma(r(y^{+}|x) - r(y^{-}|x))$$
 
-$$P(y^{+} \succ y^{-}|x) = \sigma(\beta\lbrack log\pi^{*}(y^{+}|x) - log\pi^{*}(y^{-}|x) - (log\pi_{SFT}(y^{+}|x) - log\pi_{SFT}(y^{-}|x))\rbrack)$$
+$$P(y^{+} \succ y^{-}|x) = \sigma(\beta\lbrack log\pi_{ideal}(y^{+}|x) - log\pi_{ideal}(y^{-}|x) - (log\pi_{SFT}(y^{+}|x) - log\pi_{SFT}(y^{-}|x))\rbrack)$$
 
 The SFT terms are constant with respect to $\theta$ and can be removed
 since they do not change the gradient. We also replace the ideal policy
