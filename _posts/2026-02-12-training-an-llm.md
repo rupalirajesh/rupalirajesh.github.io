@@ -16,7 +16,7 @@ Training an LLM involves the following steps -
       - Supervised Fine-Tuning (***SFT***): The model is trained on a labeled dataset of human-written or synthetically generated examples of ideal prompts + responses.
       - Preference Fine-Tuning (PreFT): The model is aligned to human preferences using either ***RLHF*** or ***DPO***.
 
-![](/assets/images/IMG_0793.jpg){: .align-center style="width: 70%; max-width: 600px;"}
+![](/assets/images/IMG_0793.jpg)
 
 # Pretraining
 
