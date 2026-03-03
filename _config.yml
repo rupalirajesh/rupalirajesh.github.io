@@ -46,3 +46,6 @@ defaults:
       comments: false
       share: true
       related: true
+
+after_footer_scripts:
+  - /_includes/mathjax.html
