@@ -47,3 +47,6 @@ defaults:
       comments: false
       share: true
       related: true
+
+math:
+  provider: mathjax
