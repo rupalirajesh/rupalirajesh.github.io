@@ -47,5 +47,7 @@ defaults:
       share: true
       related: true
 
-after_footer_scripts:
-  - mathjax.html
+head_scripts:
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+mathjax:
+  enable: true
