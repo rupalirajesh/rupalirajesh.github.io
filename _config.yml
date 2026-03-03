@@ -21,7 +21,6 @@ author:
 # Build settings
 markdown: kramdown
 kramdown:
-  math_engine: mathjax
   syntax_highlighter: rouge
 
 plugins:
@@ -47,6 +46,3 @@ defaults:
       comments: false
       share: true
       related: true
-
-math:
-  provider: mathjax
