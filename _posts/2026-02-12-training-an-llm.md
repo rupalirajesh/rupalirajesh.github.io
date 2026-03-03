@@ -16,7 +16,7 @@ Training an LLM involves the following steps -
       - Supervised Fine-Tuning (***SFT***): The model is trained on a labeled dataset of human-written or synthetically generated examples of ideal prompts + responses.
       - Preference Fine-Tuning (PreFT): The model is aligned to human preferences using either ***RLHF*** or ***DPO***.
 
-![](/assets/images/IMG_0793.jpg){: .align-center style="width: 85%; max-width: 600px;"}
+![](/assets/images/IMG_0793.jpg){: .align-center style="width: 100%; max-width: 600px;"}
 
 # Pretraining
 
@@ -236,7 +236,7 @@ This objective function is optimized using an ***RL algorithm*** like
 ***PPO*** or ***GRPO***. I explain how PPO works below as an excuse to
 learn about it. Feel free to skip!
 
-![](/assets/images/IMG_0792.jpg){: .align-center style="width: 85%; max-width: 600px;"}
+![](/assets/images/IMG_0792.jpg){: .align-center style="width: 100%; max-width: 600px;"}
 
 ### Proximal Policy Optimization (PPO)
 
@@ -245,7 +245,7 @@ too much from the original policy, using a *clipped objective.*
 
 In policy gradient methods for RL, we update the parameters $\theta$ to increase the expected reward:
 
-![](/assets/images/eq1.png){: .align-center style="width: 10%; max-width: 600px;"}
+![](/assets/images/eq1.png){: .align-center style="width: 100%; max-width: 600px;"}
 
 Here, $\theta$ are the model parameters (the transformer weights), $\pi_{\theta}$ is the language model’s output distribution, $\tau$ is a fully generated response, and $R(\tau)$ is the total reward for that response. The expectation averages rewards over many responses the model could generate.
 
@@ -261,14 +261,14 @@ Reward: $r$ given at the end of the sequence.
 
 As an example -
 
-![](/assets/images/IMG_0794-2.jpg){: .align-center style="width: 85%; max-width: 600px;"}
+![](/assets/images/IMG_0794-2.jpg){: .align-center style="width: 100%; max-width: 600px;"}
 
 To maximise this expectation, we use policy gradient updates to the
 parameters. Here is the vanilla policy gradient.
 
 Objective:
 
-![](/assets/images/eq3.png){: .align-center style="width: 20%; max-width: 600px;"}
+![](/assets/images/eq3.png){: .align-center style="width: 100%; max-width: 600px;"}
 
 Update: $\theta_{new} = \theta_{old} + \alpha\nabla_{\theta}(E)$
 
@@ -314,7 +314,7 @@ same constraint with a first-order stochastic gradient descent.
 $L_{policy}(\theta) = E\lbrack min(r(\theta)A,clip(r(\theta),1 - \epsilon,1 + \epsilon)A)\rbrack$
 where the clip function is defined as follows:
 
-![](/assets/images/eq2.png){: .align-center style="width: 15%; max-width: 600px;"}
+![](/assets/images/eq2.png){: .align-center style="width: 100%; max-width: 600px;"}
 
 It constrains $r(\theta)$ to lie between $1 - \epsilon$ and
 $1 + \epsilon$. Intuitively, this means $1 + \epsilon$ is the maximum
@@ -337,7 +337,7 @@ model). The reward is zero except at the final token.
 
 At each step, here is the defined reward:
 $r = r_{RM} - KL(\pi_{\theta}||\pi_{SFT})$. More
-practically,![](/assets/images/eq4.png){: .align-center style="width: 20%; max-width: 600px;"}.
+practically,![](/assets/images/eq4.png){: .align-center style="width: 100%; max-width: 600px;"}.
 The computer returns are
 $\overset{\hat{}}{R_{t}} = \sum_{i = t}^{T}{}\gamma^{i - t}r_{i}$.
 
