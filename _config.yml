@@ -48,4 +48,4 @@ defaults:
       related: true
 
 after_footer_scripts:
-  - /_includes/mathjax.html
+  - mathjax.html
