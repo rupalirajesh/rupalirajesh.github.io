@@ -1,0 +1,5 @@
+_site/
+.gems/
+.bundle/
+Gemfile
+Gemfile.lock

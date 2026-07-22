@@ -1,15 +1,26 @@
 title: Rupali Rajesh
-description: LLMs | AI
+description: "Rupali Rajesh — large language models"
 url: "https://rupalirajesh.github.io"
 baseurl: ""
 remote_theme: mmistakes/minimal-mistakes@4.19.3
 theme: null
- 
+
 # Site Author
 author:
-  name: "Website of Rupali Rajesh"
-  bio: "Artificial Intelligence student focused on Language Models."
+  name: "Rupali Rajesh"
+  avatar: "/assets/images/rupali-profile.jpg"
+  bio: "CS + Data Science graduate from BITS Goa. Working on large language models at WSAI, IITM with Prof. Balaraman Ravindran."
   location: "Chennai, Tamil Nadu, IN"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/rupalirajesh"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/rupali-rajesh-01788028b/"
+
+# Footer links (same as author links, shown on every page)
+footer:
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
@@ -50,6 +61,7 @@ defaults:
       related: true
 
 head_scripts:
+  - /assets/js/mathjax-config.js
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 mathjax:
   enable: true
