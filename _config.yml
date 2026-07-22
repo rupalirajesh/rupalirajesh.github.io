@@ -1,5 +1,5 @@
 title: Rupali Rajesh
-description: "Research on language models and audio understanding"
+description: "Rupali Rajesh — large language models"
 url: "https://rupalirajesh.github.io"
 baseurl: ""
 remote_theme: mmistakes/minimal-mistakes@4.19.3
@@ -8,7 +8,8 @@ theme: null
 # Site Author
 author:
   name: "Rupali Rajesh"
-  bio: "CS + Data Science student at BITS Goa, working on large language models and audio/music understanding."
+  avatar: "/assets/images/rupali-profile.jpg"
+  bio: "CS + Data Science graduate from BITS Goa. Working on large language models at WSAI, IITM with Prof. Balaraman Ravindran."
   location: "Chennai, Tamil Nadu, IN"
   links:
     - label: "GitHub"
@@ -60,6 +61,7 @@ defaults:
       related: true
 
 head_scripts:
+  - /assets/js/mathjax-config.js
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 mathjax:
   enable: true

@@ -3,27 +3,86 @@
 
 @import "minimal-mistakes";
 
+// ---- shared accent ----
+$accent: #2a78d6;
+$accent-dark: #3987e5;
+
+// ---- stat row (post header) ----
+.stat-row {
+  display: flex;
+  gap: 1em;
+  margin: 0 0 1.5em;
+  flex-wrap: wrap;
+}
+
+.stat-tile {
+  flex: 1 1 120px;
+  text-align: center;
+  padding: 1em 0.5em;
+  border-radius: 10px;
+  background: #f2f6fc;
+  border: 1px solid #e1e0d9;
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-num {
+  font-size: 2em;
+  font-weight: 700;
+  color: $accent;
+  line-height: 1.1;
+}
+
+.stat-label {
+  font-size: 0.78em;
+  color: #767676;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 0.25em;
+}
+
+// ---- audio example card ----
 .audio-example {
   margin: 2em 0;
-  padding: 1.25em 1.5em;
+  padding: 1.4em 1.6em;
   border: 1px solid #e1e0d9;
-  border-radius: 8px;
+  border-left: 4px solid $accent;
+  border-radius: 10px;
   background: #fafaf8;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 
-  h4 { margin-top: 0; }
-  audio { width: 100%; margin: 0.5em 0 0.75em; }
+  h4 {
+    margin-top: 0;
+    margin-bottom: 0.6em;
+    font-size: 1.05em;
+  }
+
+  audio {
+    width: 100%;
+    margin: 0.25em 0 0.9em;
+    border-radius: 6px;
+  }
 }
 
 .audio-example__caption {
   font-size: 0.95em;
   color: #555;
-  margin-bottom: 0.75em;
+  margin-bottom: 0.9em;
 }
 
-.audio-example__note {
+.audio-example__points {
   font-size: 0.92em;
   color: #444;
-  margin-top: 0.75em;
+  margin: 0.9em 0 0;
+  padding-left: 1.2em;
+
+  li {
+    margin-bottom: 0.4em;
+    padding-left: 0.2em;
+  }
+  li::marker {
+    color: $accent;
+  }
 }
 
 .model-answer-table {
@@ -31,28 +90,27 @@
   border-collapse: collapse;
   font-size: 0.92em;
   margin: 0.5em 0;
+  border-radius: 6px;
+  overflow: hidden;
 
   th, td {
-    padding: 0.4em 0.6em;
+    padding: 0.5em 0.7em;
     text-align: left;
-    border-bottom: 1px solid #e1e0d9;
   }
-  th { color: #767676; font-weight: 600; }
-  td.ok { color: #0a7a0a; font-weight: 600; }
-  td.bad { color: #b23b3b; font-weight: 600; }
-}
-
-@media (prefers-color-scheme: dark) {
-  .audio-example {
-    background: #1f1f1e;
-    border-color: #3a3a38;
+  th {
+    color: #767676;
+    font-weight: 600;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    border-bottom: 2px solid #e1e0d9;
   }
-  .audio-example__caption { color: #c3c2b7; }
-  .audio-example__note { color: #c3c2b7; }
-  .model-answer-table {
-    th, td { border-bottom-color: #3a3a38; }
-    th { color: #9a9990; }
-    td.ok { color: #3bc23b; }
-    td.bad { color: #e07070; }
+  tbody tr:nth-child(odd) { background: rgba(0, 0, 0, 0.02); }
+  td.ok, td.bad {
+    font-weight: 700;
+    text-align: center;
+    width: 2.5em;
   }
+  td.ok { color: #0a7a0a; }
+  td.bad { color: #b23b3b; }
 }
