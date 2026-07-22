@@ -2,3 +2,57 @@
 ---
 
 @import "minimal-mistakes";
+
+.audio-example {
+  margin: 2em 0;
+  padding: 1.25em 1.5em;
+  border: 1px solid #e1e0d9;
+  border-radius: 8px;
+  background: #fafaf8;
+
+  h4 { margin-top: 0; }
+  audio { width: 100%; margin: 0.5em 0 0.75em; }
+}
+
+.audio-example__caption {
+  font-size: 0.95em;
+  color: #555;
+  margin-bottom: 0.75em;
+}
+
+.audio-example__note {
+  font-size: 0.92em;
+  color: #444;
+  margin-top: 0.75em;
+}
+
+.model-answer-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92em;
+  margin: 0.5em 0;
+
+  th, td {
+    padding: 0.4em 0.6em;
+    text-align: left;
+    border-bottom: 1px solid #e1e0d9;
+  }
+  th { color: #767676; font-weight: 600; }
+  td.ok { color: #0a7a0a; font-weight: 600; }
+  td.bad { color: #b23b3b; font-weight: 600; }
+}
+
+@media (prefers-color-scheme: dark) {
+  .audio-example {
+    background: #1f1f1e;
+    border-color: #3a3a38;
+  }
+  .audio-example__caption { color: #c3c2b7; }
+  .audio-example__note { color: #c3c2b7; }
+  .model-answer-table {
+    th, td { border-bottom-color: #3a3a38; }
+    th { color: #9a9990; }
+    td.ok { color: #3bc23b; }
+    td.bad { color: #e07070; }
+  }
+}

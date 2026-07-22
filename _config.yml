@@ -1,15 +1,25 @@
 title: Rupali Rajesh
-description: LLMs | AI
+description: "Research on language models and audio understanding"
 url: "https://rupalirajesh.github.io"
 baseurl: ""
 remote_theme: mmistakes/minimal-mistakes@4.19.3
 theme: null
- 
+
 # Site Author
 author:
-  name: "Website of Rupali Rajesh"
-  bio: "Artificial Intelligence student focused on Language Models."
+  name: "Rupali Rajesh"
+  bio: "CS + Data Science student at BITS Goa, working on large language models and audio/music understanding."
   location: "Chennai, Tamil Nadu, IN"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/rupalirajesh"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/rupali-rajesh-01788028b/"
+
+# Footer links (same as author links, shown on every page)
+footer:
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
