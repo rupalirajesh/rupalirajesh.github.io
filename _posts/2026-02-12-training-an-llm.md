@@ -73,10 +73,10 @@ question-answer format. A good example of this data might be stack
 exchange posts or reddit posts, which are naturally in this format.
 
 We generate *labeled data* where each example is of the
-form$\lbrack instruction (or prompt), completion (or ideal response)\rbrack.$
+form `[instruction (or prompt), completion (or ideal response)]`.
 
 For explanation models, this might be
-$\lbrack instruction = input + prediction, completion = trusted explanation\rbrack$.
+`[instruction = input + prediction, completion = trusted explanation]`.
 
 This is our dataset of "good responses" for the model to
 learn from.
@@ -93,7 +93,7 @@ The model is fine-tuned with ***cross-entropy loss***.
 this optimization works.)
 
 Let's represent the dataset as follows:
-$D = \{(x^{(i)},y^{(i)}{\}^{N}}_{i = 1}$.
+$$D = \{(x^{(i)}, y^{(i)})\}_{i=1}^{N}.$$
 
 Here, $x^{(i)}$ is the instruction, $y^{(i)}$ is the completion, and $N$
 is the number of training examples.
@@ -113,9 +113,9 @@ rule*.
 
 We want the model to assign the highest probability to the ideal
 response. So we define a *maximum likelihood objective*:
-$max\prod_{i = 1}^{N}{}p(y^{(i)}|x^{(i)})$ which is the same as
+$\max\prod_{i = 1}^{N}{}p(y^{(i)}|x^{(i)})$ which is the same as
 maximising
-$max\sum_{i = 1}^{N}{}logp(y^{(i)}|x^{(i)}) = max\sum_{i = 1}^{N}{}\sum_{j = 1}^{T_{i}}{}logp({y_{j}}^{(i)}|x^{(i)},{y_{< j}}^{(i)})$.
+$\max\sum_{i = 1}^{N}{}logp(y^{(i)}|x^{(i)}) = \max\sum_{i = 1}^{N}{}\sum_{j = 1}^{T_{i}}{}logp({y_{j}}^{(i)}|x^{(i)},{y_{< j}}^{(i)})$.
 
 Training frameworks like to minimize functions, so we convert this to a
 negative log-likelihood loss function given by:
@@ -223,10 +223,10 @@ State: $x,y_{< t}$
 
 Action: $y_{t}$
 
-Episode reward: $r(x,y$)
+Episode reward: $r(x,y)$
 
 We define the following objective:
-$maxE_{y\sim\pi_{\theta}}\lbrack r(x,y) - \beta KL(\pi_{\theta}(y|x)||\pi_{SFT}(y|x))\rbrack$.
+$\max_{\theta}E_{y\sim\pi_{\theta}}\lbrack r(x,y) - \beta KL(\pi_{\theta}(y|x)||\pi_{SFT}(y|x))\rbrack$.
 
 This maximises the reward while the KL distance term keeps the behaviour
 of our optimized model similar to the SFT model. This prevents reward
@@ -245,7 +245,7 @@ too much from the original policy, using a *clipped objective.*
 
 In policy gradient methods for RL, we update the parameters $\theta$ to increase the expected reward:
 
-![](/assets/images/eq1.png){: .align-center style="width: 100%; max-width: 600px;"}
+$$\max_{\theta} E_{\tau\sim\pi_{\theta}}\lbrack R(\tau)\rbrack$$
 
 Here, $\theta$ are the model parameters (the transformer weights), $\pi_{\theta}$ is the language model’s output distribution, $\tau$ is a fully generated response, and $R(\tau)$ is the total reward for that response. The expectation averages rewards over many responses the model could generate.
 
@@ -268,7 +268,7 @@ parameters. Here is the vanilla policy gradient.
 
 Objective:
 
-![](/assets/images/eq3.png){: .align-center style="width: 100%; max-width: 600px;"}
+$$\nabla_{\theta}J(\theta) = E_{\pi_{\theta}}\lbrack \nabla_{\theta}log\pi_{\theta}(a|s)A(s,a)\rbrack$$
 
 Update: $\theta_{new} = \theta_{old} + \alpha\nabla_{\theta}(E)$
 
@@ -298,7 +298,7 @@ current situation is by evaluating the actor's decisions.
 Without this, the policy gradients would be the vanilla policy
 gradients. The critic allows us to compute advantage which answers if
 this action is better or worse than expected, stabilizing training.
-  The critic is trained by regression. $\overset{\hat{}}{V}(s_{t}) = r_{t} + \gamma V(s_{t + 1})$. The loss is typically simply MSE, $L_{value} = E\lbrack(V(s_{t}) - \overset{\hat{}}{V}(s_{t}))^{2}\rbrack$.
+  The critic is trained by regression. $\hat{V}(s_{t}) = r_{t} + \gamma V(s_{t + 1})$. The loss is typically simply MSE, $L_{value} = E\lbrack(V(s_{t}) - \hat{V}(s_{t}))^{2}\rbrack$.
 
 Let's rewrite the objective using old policy data:
 $J(\theta) = E_{\theta_{old}}\lbrack r_{\theta}(s,a)A(s,a)\rbrack.$
@@ -314,7 +314,7 @@ same constraint with a first-order stochastic gradient descent.
 $L_{policy}(\theta) = E\lbrack min(r(\theta)A,clip(r(\theta),1 - \epsilon,1 + \epsilon)A)\rbrack$
 where the clip function is defined as follows:
 
-![](/assets/images/eq2.png){: .align-center style="width: 100%; max-width: 600px;"}
+$$\mathrm{clip}(x,a,b) = \begin{cases} a & \text{if } x < a \\ x & \text{if } a \leq x \leq b \\ b & \text{if } x > b \end{cases}$$
 
 It constrains $r(\theta)$ to lie between $1 - \epsilon$ and
 $1 + \epsilon$. Intuitively, this means $1 + \epsilon$ is the maximum
@@ -337,12 +337,15 @@ model). The reward is zero except at the final token.
 
 At each step, here is the defined reward:
 $r = r_{RM} - KL(\pi_{\theta}||\pi_{SFT})$. More
-practically,![](/assets/images/eq4.png){: .align-center style="width: 100%; max-width: 600px;"}.
-The computer returns are
-$\overset{\hat{}}{R_{t}} = \sum_{i = t}^{T}{}\gamma^{i - t}r_{i}$.
+practically,
+
+$$r_{t} = r_{t}^{RM} - \beta(log\pi_{\theta}(a_{t}|s_{t}) - log\pi_{SFT}(a_{t}|s_{t})).$$
+
+The computed returns are
+$\hat{R}\_{t} = \sum\_{i = t}^{T}{}\gamma^{i - t}r_{i}$.
 
 $V(s_{t})$ is learned by the critic. Advantage
-$A_{t} = \overset{\hat{}}{R_{t}} - V(s_{t})$. Everything else stays
+$A_{t} = \hat{R}\_{t} - V(s\_{t})$. Everything else stays
 exactly the same.
 
 In summary, the reward model tells us what humans prefer, the value
@@ -393,7 +396,7 @@ Let's derive this. This is known as an inverse RL
 derivation since we infer the reward model from observed behaviour.
 
 We want to optimize
-$maxE_{y\sim\pi}\lbrack r(x,y)\rbrack - \beta KL(\pi||\pi_{SFT})$.
+$\max_{\pi}E_{y\sim\pi}\lbrack r(x,y)\rbrack - \beta KL(\pi||\pi_{SFT})$.
 $KL(\pi||\pi_{SFT}) = \sum_{y}^{}{}\pi(y|x)(log\pi(y|x) - log\pi_{SFT}(y|x))$.
 Therefore the objective becomes
 $\sum_{y}^{}{}\pi(y|x)\lbrack r(x,y) - \beta log\pi(y|x) + \beta log\pi_{SFT}(y|x)\rbrack$.
@@ -427,7 +430,11 @@ Rearranging the terms, we get:
 
 $$r(x,y) = \beta \big( \log \pi_{ideal}(y \mid x) - \log \pi_{SFT}(y \mid x) \big) + \beta \log Z(x)$$
 
-![](/assets/images/eq5.png){: .align-center style="width: 100%; max-width: 600px;"}
+Subtracting this for $y^{+}$ and $y^{-}$, the $\log Z(x)$ terms cancel:
+
+$$r(y^{+}|x) - r(y^{-}|x) = \beta\Big[\big(\log\pi_{ideal}(y^{+}|x) - \log\pi_{SFT}(y^{+}|x) + \log Z(x)\big) - \big(\log\pi_{ideal}(y^{-}|x) - \log\pi_{SFT}(y^{-}|x) + \log Z(x)\big)\Big]$$
+
+$$r(y^{+}|x) - r(y^{-}|x) = \beta\Big[\log\pi_{ideal}(y^{+}|x) - \log\pi_{ideal}(y^{-}|x) - \big(\log\pi_{SFT}(y^{+}|x) - \log\pi_{SFT}(y^{-}|x)\big)\Big]$$
 
 Modeling preference probability using Bradley-Terry derived earlier, we
 have:
@@ -440,7 +447,7 @@ The SFT terms are constant with respect to $\theta$ and can be removed
 since they do not change the gradient. We also replace the ideal policy
 by our trainable policy $\pi_{\theta}$.
 
-$P(y^{+} \succ y^{-}|x) = \sigma(\beta\lbrack log\pi_{\theta}(y^{+}|x) - log\pi_{\theta}(y^{-}|x)\rbrack)$.
+$$P(y^{+} \succ y^{-}|x) = \sigma(\beta\lbrack log\pi_{\theta}(y^{+}|x) - log\pi_{\theta}(y^{-}|x)\rbrack)$$
 
 For each preference pair, we minimize the following DPO loss:
 $L_{DPO} = - log\sigma(\beta\lbrack log\pi_{\theta}(y^{+}|x) - log\pi_{\theta}(y^{-}|x)\rbrack)$.
@@ -458,7 +465,7 @@ optimize preferences, we enforce closeness to SFT.
   - Gradients are bounded. Let's call
 $\Delta = \beta\lbrack log\pi_{\theta}(y^{+}|x) - log\pi_{\theta}(y^{-}|x)\rbrack$.
 Therefore,
-$\frac{\partial L_{DPO}}{\partial\Delta} = \sigma(\Delta) - 1\epsilon\lbrack - 1,0\rbrack$.
+$\frac{\partial L_{DPO}}{\partial\Delta} = \sigma(\Delta) - 1 \in \lbrack -1,0\rbrack$.
 Therefore, there are no exploding gradients. In PPO, when $\pi_{SFT}$ is
 small, the importance ratio $r(\theta) = \frac{\pi_{\theta}}{\pi_{SFT}}$
 explodes giving us a huge gradient.

@@ -7,6 +7,84 @@
 $accent: #2a78d6;
 $accent-dark: #3987e5;
 
+// ---- project cards (homepage) ----
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.8em;
+  margin: 1.4em 0 2em;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.1em 1.2em;
+  background: #fafaf8;
+  border: 1px solid #e1e0d9;
+  border-top: 4px solid $accent;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.09);
+  }
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 0.4em;
+    font-size: 1.1em;
+  }
+
+  p {
+    font-size: 0.93em;
+    color: #444;
+    margin-bottom: 0.9em;
+    flex-grow: 1;
+  }
+}
+
+.project-card__icon {
+  font-size: 1.7em;
+  margin-bottom: 0.2em;
+  line-height: 1;
+}
+
+.project-card__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  margin-bottom: 0.9em;
+
+  span {
+    font-size: 0.72em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: $accent-dark;
+    background: rgba(42, 120, 214, 0.09);
+    padding: 0.28em 0.65em;
+    border-radius: 20px;
+  }
+}
+
+.project-card__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  font-size: 0.9em;
+
+  a {
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
 // ---- stat row (post header) ----
 .stat-row {
   display: flex;
