@@ -6,7 +6,7 @@ author: Rupali Rajesh
 math: true
 ---
 
-# Overall Training Pipeline
+# Post-training stages (and the math)
 
 Training an LLM involves the following steps -
 

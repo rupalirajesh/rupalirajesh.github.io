@@ -3,7 +3,7 @@ layout: home
 author_profile: true
 ---
 
-Hi, I'm Rupali. I work on language models - text, audio, and video - and mostly ask the same three questions: how trustworthy their reasoning is, whether they can perceive things humans take for granted, and whether they hold up under social pressure.
+Hi, I'm Rupali. I work on language models - text, audio, video!
 
 ## Projects
 
