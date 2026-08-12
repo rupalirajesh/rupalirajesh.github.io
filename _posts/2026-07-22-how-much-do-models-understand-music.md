@@ -9,13 +9,13 @@ excerpt: "Six audio-language models, tested on whether they can actually hear pi
 <div class="stat-row">
   <div class="stat-tile"><span class="stat-num">6</span><span class="stat-label">models tested</span></div>
   <div class="stat-tile"><span class="stat-num">13</span><span class="stat-label">listening tasks</span></div>
-  <div class="stat-tile"><span class="stat-num">4</span><span class="stat-label">examples below</span></div>
+  <div class="stat-tile"><span class="stat-num">6</span><span class="stat-label">examples below</span></div>
 </div>
 
 Six audio-language models - Qwen2-Audio-7B, Qwen2.5-Omni-7B, Qwen3-Omni-30B-A3B, Audio
 Flamingo 3, Music Flamingo, and Gemini-2.5-Pro - tested on the same pitch, key, tempo, and
-meter questions, with controls for guessing from text alone. Four results below, with the
-actual audio and every model's answer.
+meter questions, with controls for guessing from text alone. Six results below, with the
+actual audio and every model's answer where there's a single clip to hear.
 
 <div class="audio-example">
   <h4>1. Instrument identification - the one clean win</h4>
@@ -76,15 +76,10 @@ actual audio and every model's answer.
       <tr><td>Gemini-2.5-Pro</td><td>4</td><td class="bad">✗</td></tr>
     </tbody>
   </table>
-  <ul class="audio-example__points">
-    <li>All six models say "4," right or wrong.</li>
-    <li>Same guess shows up with <em>no audio at all</em>.</li>
-    <li>Swapping in a completely unrelated clip doesn't change the answer either - accuracy is actually higher with the wrong clip than the correct one, the only task where that happens.</li>
-  </ul>
 </div>
 
 <div class="audio-example">
-  <h4>4. Key identification - when multiple-choice inflates the score</h4>
+  <h4>4. Key identification</h4>
   <audio controls preload="none" src="/assets/audio/key_cmajor.mp3">Your browser doesn't support inline audio.</audio>
   <p class="audio-example__caption">Ground truth: <strong>C major</strong></p>
   <table class="model-answer-table">
@@ -103,6 +98,24 @@ actual audio and every model's answer.
     <li>But the multiple-choice options are built from exactly those "musically close" alternatives, so that's partly by construction, not proof of listening.</li>
     <li>Open-ended (no options given), Gemini goes from ~42% to <strong>0 out of 20</strong> on naming the key itself.</li>
   </ul>
+</div>
+
+<div class="audio-example">
+  <h4>5. How much do they actually listen?</h4>
+  <img src="/assets/images/audio_attention.png" alt="Mean attention on audio tokens by layer, five models compared to a uniform baseline">
+  <p class="audio-example__caption">Attention each model places on audio tokens, layer by layer, against audio's actual share of the input (~55–67%, dashed line).</p>
+</div>
+
+<div class="audio-example">
+  <h4>6. Fixing pitch perception - a rare intervention that worked</h4>
+  <table class="model-answer-table">
+    <thead><tr><th>Task</th><th>Before</th><th>After</th></tr></thead>
+    <tbody>
+      <tr><td>Cents discrimination (how far off-pitch)</td><td>0.55</td><td class="ok">0.94</td></tr>
+      <tr><td>Tuning judgment (in-tune or not)</td><td>0.53</td><td class="ok">0.89</td></tr>
+    </tbody>
+  </table>
+  <p class="audio-example__caption">Fine-tuned on a zoomed pitch chart with a labeled in-tune reference line, evaluated on held-out audio.</p>
 </div>
 
 ## The broader pattern

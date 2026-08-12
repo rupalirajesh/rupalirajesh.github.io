@@ -11,8 +11,8 @@ Hi, I'm Rupali. I work on language models - text, audio, and video - and mostly 
 
   <div class="project-card">
     <div class="project-card__icon">🩺</div>
-    <h3>Trustworthy Medical QA</h3>
-    <p>Fine-tuning language models to answer medical questions with explanations that are actually faithful to the evidence, not just plausible-sounding.</p>
+    <h3>Teaching Trustworthiness</h3>
+    <p>Fine-tuning language models to give more trustworthy explanations - improving correctness, consistency, and faithfulness in stages.</p>
     <div class="project-card__stats">
       <span>5 models</span>
       <span>SFT · DPO · GRPO</span>
@@ -23,7 +23,7 @@ Hi, I'm Rupali. I work on language models - text, audio, and video - and mostly 
   <div class="project-card">
     <div class="project-card__icon">🎵</div>
     <h3>How Much Do Models Understand Music?</h3>
-    <p>Testing whether audio-language models can actually hear pitch, key, tempo, and meter - or are just guessing from text priors. Playable audio, real model answers.</p>
+    <p>Testing whether audio-language models actually understand music - across tests in pitch, key, tempo, harmony, meter, and more.</p>
     <div class="project-card__stats">
       <span>6 models</span>
       <span>13 tasks</span>
@@ -37,8 +37,8 @@ Hi, I'm Rupali. I work on language models - text, audio, and video - and mostly 
 
   <div class="project-card">
     <div class="project-card__icon">🎥</div>
-    <h3>Sycophancy Resistance</h3>
-    <p>Training a video-language model to hold its ground on what it actually sees, even when a user confidently insists otherwise - while still accepting genuine corrections.</p>
+    <h3>Mitigating Sycophancy in Video LMs</h3>
+    <p>Fixing the sycophancy RLHF trains into video-language models, and getting them to actually attend to what's in the video instead of just what the prompt says.</p>
     <div class="project-card__stats">
       <span>Qwen2.5-VL</span>
       <span>10K+ pairs</span>
